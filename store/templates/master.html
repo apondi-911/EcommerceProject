@@ -1,0 +1,150 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+   <meta charset="UTF-8">
+   {% block title %}
+    <title>Online Shopping</title>
+    {% endblock %}
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/master.css' %}">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+  {% block additional_css %}
+
+  {% endblock %}
+
+</head>
+<body style="background: rgba(255,235,205,0.32); scroll-behavior: smooth;  min-height: 100vh;
+        display: flex;
+        flex-direction: column;">
+  <!-- navbar -->
+
+<nav class="one-edge-shadow
+  navbar
+  sticky-top navbar 
+  navbar-expand-lg
+  text-white" style="background: rgba(89,88,88,0.45)">
+    <a class="navbar-brand ms-3  " href="/" >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <img src="{% static 'images/logo.png'%}" style="width:100px;height:100px;" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'store' %}"><h2 style="color: wheat; text-transform: Capitalize; font-family: billabong,serif;">The Apparel Fashion House</h2> <span class="sr-only">(current)</span></a>
+        </li>
+
+      </ul>
+
+      <ul class=" navbar-nav my-2 my-lg-0">
+
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'cart' %}">
+              <img src="{% static 'images/cart.png' %}" alt="" style="width:30px;height:30px;color:#d36c4e;" >
+            <span class="badge" style="background: #d36c4e; color: white">{{request.session.cart.keys|length}}</span>
+            <span class="sr-only">(current)</span></a>
+        </li>
+
+        {% if request.session.customer %}
+        <p class="mt-2" style="color: black">Welcome, {{ request.user.email }}!</p>
+        <li class="nav-item active ">
+          <a class="nav-link" style="color: white; margin-left: 15px" href="{% url 'orders' %}">Orders<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active ">
+          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'logout' %}">Logout<span class="sr-only">(current)</span></a>
+        </li>
+        {% else %}
+       
+        <li class="nav-item active">
+          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'signup' %}">Signup<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
+        </li>
+          <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black">Products
+                    <span class="sr-only">(current)</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
+                    {% for category in categories %}
+                        <a class="dropdown-item"
+                           href="{% url 'store' %}?category={{ category.id }}" onclick="scrollToCategory('{{ category.name }}', '{{ category.id }}')">{{category.name}}
+                        </a>
+                    {% endfor %}
+                </div>
+          </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+ <!---->
+  {% block content %}
+
+  {% endblock %}
+<footer id="footer" style="bottom: 0;width: 100%;background: rgba(89, 88, 88, 0.38);text-align: center;" >
+    <div class="container mt-4">
+      <h5 style="color: white">The Apparel Fashion House</h5>
+      <small>Where Fashion Meets Passion.</small>
+      <div class="social-links">
+        <a href="#" class="twitter" style="color: #d36c4e"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="facebook" style="color: #d36c4e"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="instagram" style="color: #d36c4e"><i class="fab fa-instagram"></i></a>
+<!--        <a href="" class="google-plus"><i class="bx bxl-skype"></i></a>-->
+        <a href="#" class="linkedin" style="color: #d36c4e"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong ><span>The Apparel Fashion House</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/green-free-one-page-bootstrap-template/ -->
+<!--        Edited by <a href="https://bootstrapmade.com/">Ashley M. Apondi</a>-->
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fab fa-arrow-up-short"></i></a>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- Add this JavaScript block to your master.html -->
+<!-- Add this JavaScript block to master.html -->
+<script>
+  function scrollToCategory(categoryId) {
+    var element = document.getElementById(categoryId);
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

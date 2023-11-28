@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,27 +24,31 @@ SECRET_KEY = '-95t%=#4o3@l-(-%ok9*h%n3!0(sdchjn%+_$5#umaj-!3bg*7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# APPEND_SLASH=False
 
+ALLOWED_HOSTS = ['*',]
 
 # Application definition
 
 INSTALLED_APPS = [
+
+    'store',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store'
+    'rest_framework',
+    'django_daraja'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
@@ -71,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Eshop.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -82,9 +84,11 @@ DATABASES = {
     }
 }
 
+# settings.py
 
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_SAVE_EVERY_REQUEST = True
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -101,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -115,10 +118,70 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 MEDIA_URL = "/image/download/"
 MEDIA_ROOT = BASE_DIR
+
+AUTHENTICATION_BACKENDS = [
+    'store.backends.EmailBackend',  # Replace 'path.to.backends' with the actual path
+    'django.contrib.auth.backends.ModelBackend',
+]
+AUTHENTICATION_CLASSES = [
+    'django.contrib.auth.backends.ModelBackend',
+    # other backends...
+]
+# settings.py
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    # Add other hashers if needed
+]
+
+LOGIN_URL = '/login/'  # or your login URL
+from django.urls import reverse_lazy
+
+LOGOUT_REDIRECT_URL = reverse_lazy('login')
+
+# AUTH_USER_MODEL = 'store.Customer'
+
+APPEND_SLASH = False
+
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     "DEFAULT_PERMISSION_CLASSES": [
+#         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+#     ]
+# }
+
+SECURE_SSL_REDIRECT = False
+# CORS_REPLACE_HTTPS_REFERER = True
+# HOST_SCHEME = "https://"
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_SECONDS = 1000000
+# SECURE_FRAME_DENY = True
+
+# MPESA INTEGRATION
+MPESA_ENVIRONMENT = 'sandbox'
+
+# consumer Key of the app is generated immediately you create an Application
+MPESA_CONSUMER_KEY = 'AaEPRd008qWkEnnxYUcedlJe8F3mVKK0'
+MPESA_CONSUMER_SECRET = 'qkucxPTL0JGvL2ku'
+
+# Shortcode and express appears when I select the app I'm working on
+MPESA_SHORTCODE = '174379'
+MPESA_EXPRESS_SHORTCODE = '174379'
+MPESA_SHORTCODE_TYPE = 'CustomerPayBillOnline'
+MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+MPESA_INITIATOR_USERNAME = 'testapi'
+MPESA_INITIATOR_SECURITY_CREDENTIAL = 'Safaricom999!*!'

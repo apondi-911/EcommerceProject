@@ -1,4 +1,10 @@
-from .product import Products
-from .category import Category
-from  .customer import  Customer
-from  .orders import  Order
+class MpesaResponseBody:
+    objects = None
+
+
+class Transaction:
+    objects = None
+
+
+class Order:
+    pass
