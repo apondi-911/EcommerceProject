@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="icon" type="image/x-icon" href="{% static 'images/logo' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
   {% block additional_css %}
 
@@ -66,15 +68,7 @@
         <li class="nav-item active ">
           <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'logout' %}">Logout<span class="sr-only">(current)</span></a>
         </li>
-        {% else %}
-       
-        <li class="nav-item active">
-          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'signup' %}">Signup<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
-        </li>
-          <li class="nav-item dropdown">
+           <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black">Products
                     <span class="sr-only">(current)</span>
@@ -88,16 +82,28 @@
                     {% endfor %}
                 </div>
           </li>
+        {% else %}
+       
+        <li class="nav-item active">
+          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'signup' %}">Signup<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" style="background:#d36c4e; color: white; border-radius: 5px;" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
+        </li>
+
         {% endif %}
 
       </ul>
     </div>
   </nav>
 
- <!---->
   {% block content %}
 
   {% endblock %}
+ <!---->
+  {% block footer %}
+
+
 <footer id="footer" style="bottom: 0;width: 100%;background: rgba(89, 88, 88, 0.38);text-align: center;" >
     <div class="container mt-4">
       <h5 style="color: white">The Apparel Fashion House</h5>
@@ -121,13 +127,10 @@
       </div>
     </div>
   </footer><!-- End Footer -->
-
+ {% endblock %}
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fab fa-arrow-up-short"></i></a>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <!-- Add this JavaScript block to your master.html -->
-<!-- Add this JavaScript block to master.html -->
+
 <script>
   function scrollToCategory(categoryId) {
     var element = document.getElementById(categoryId);

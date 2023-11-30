@@ -35,11 +35,15 @@
 
                 <!-- password -->
                 <div class="form-group">
-                    <label for="id_password">Password</label>
-                    <input type="password" 
-                    name="password" 
-                    id="id_password"
-                     class="form-control form-control-sm" >
+                    <label for="">Password</label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="id_password" class="form-control form-control-sm">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <input type="checkbox" id="show-password-checkbox"> <small>Show Password</small>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <!--Checkme button-->
@@ -54,5 +58,14 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.getElementById('id_password');
+        const showPasswordCheckbox = document.getElementById('show-password-checkbox');
 
+        showPasswordCheckbox.addEventListener('change', function () {
+            passwordInput.type = this.checked ? 'text' : 'password';
+        });
+    });
+</script>
 {% endblock %}

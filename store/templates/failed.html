@@ -1,0 +1,15 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+      {% block title %}
+    <title>Failed Payment</title>
+    {% endblock %}
+</head>
+<div class="border rounded p-4 m-4" style="background:white; flex: 1">
+<p style="color: red; text-align: center; font-size: 30px" > The Mpesa services are not available at the moment!!<br> <small style="color: black">sorry for any inconveniences</small></p>
+<hr>
+        <a href="{% url 'homepage' %}" class="display-4 pl-4 ml-4 btn rounded-pill" style="background: #d36c4e; color: white; border-radius: 5px;">Back to Homepage</a>
+</div>
+    {% endblock %}

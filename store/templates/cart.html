@@ -70,27 +70,34 @@
         </div>
         <div class="modal-body">
           <div class="m-2 p-3">
-            <form action="{% url 'checkout' %}" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="">Address</label>
-                  <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
+           <form action="{% url 'checkout' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <label for="id_shipping_address">Shipping Address</label>
+                          <input type="text" id="id_shipping_address" class="form-control" placeholder="" aria-describedby="helpId">
+                        </div>
+                        <div class="form-group">
+                            <label for="standard_phone">Phone</label>
+                            <input type="text" name="phone" id="standard_phone" class="form-control" placeholder="" aria-describedby="helpId">
+                        </div>
+                      <h3>Order Review</h3>
+                    <!-- Display the items in the user's cart for review -->
+                    {% for item in cart_items %}
+                        <p>{{ item.product.name }} - {{ item.quantity }} x {{ item.product.price|currency }}</p>
+                    {% endfor %}
 
-                </div>
-                <div class="form-group">
-                    <label for="">Phone</label>
-                    <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                  </div>
-
-                  <input type="submit" class="btn float-right col-lg-6" style="border-color: #d36c4e; color: #d36c4e" value="Check out ">
+                    <!-- Total Price -->
+                    <p>Total: {{products|total_cart_price:request.session.cart|currency}} </p>
+               <input type="hidden" name="amount" value="{{products|total_cart_price:request.session.cart}}">
+                            <input type="submit" class="btn float-right col-lg-6" style="border-color: #d36c4e; color: #d36c4e" value="Check out">
             </form>
 
-              <form method="post" action="{% url 'payment' %}">
-                {% csrf_token %}
-                <input type="hidden" name="checkout_with_mpesa" value="1">
-                <button type="submit" class="btn btn-outline-success col-lg-6">Checkout with M-Pesa</button>
-            </form>
-
+                    <!-- Checkout with M-Pesa Form -->
+                    <form method="post" action="{% url 'payment' %}">
+                      {% csrf_token %}
+<!--                      <input type="hidden" name="checkout_with_mpesa" value="1">-->
+                      <button type="submit" class="btn btn-outline-success col-lg-6">Proceed to Payment</button>
+                    </form>
           </div>
         </div>
       </div>

@@ -1,11 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth import logout
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import path, include
 from django_daraja import mpesa, views
 
+from chat.views import chatPage
+from .views.payment import payment
+from .views.mpesa_callback import handle_mpesa_callback
+
 from .views.home import Index, store
-from .views.payment import MpesaPaymentView
+
 from .views.signup import Signup
 from .views.login import Login,logout
 from .views.cart import Cart
@@ -22,8 +26,12 @@ urlpatterns = [
     path('logout', logout, name='logout'),
     path('cart', auth_middleware(Cart.as_view()), name='cart'),
     path('check-out/', CheckOut.as_view(), name='checkout'),
+    path('payment/', payment, name='payment'),
+    path('mpesa_callback/', handle_mpesa_callback, name='mpesa_callback'),
     path('orders', auth_middleware(OrderView.as_view()), name='orders'),
-    path('mpesa-payment/', MpesaPaymentView.as_view(), name='payment'),
-    path('api/', include('store.api.urls'))
+
+    # path('livechat/', include('livechat.urls'))
+
+    # path('api/', include('store.api.urls'))
 
 ]

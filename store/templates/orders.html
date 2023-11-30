@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                
+
                 {% for order in orders %}
                 <tr>
                     <td>{{forloop.counter}}</td>
@@ -46,4 +46,6 @@
         <a href="{% url 'homepage' %}" class="display-4 pl-4 ml-4 btn rounded-pill" style="background: #d36c4e; color: white; border-radius: 5px;">Continue Shopping</a>
    </div>
 </div>
+
+
 {% endblock %}

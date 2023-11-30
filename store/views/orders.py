@@ -8,7 +8,11 @@ from store.middlewares.auth import auth_middleware
 
 class OrderView(View):
     def get(self , request ):
-        customer = request.session.get('customer')
+        customer_id = request.session.get('customer')
+        if not customer_id:
+            # Handle the case where customer ID is not set in the session
+            return redirect('login')  # Redirect to the login page or homepage
+
+        customer = Customer.objects.get(pk=customer_id)
         orders = Order.get_orders_by_customer(customer)
-        print(orders)
-        return render(request , 'orders.html'  , {'orders' : orders})
+        return render(request, 'orders.html', {'orders': orders})

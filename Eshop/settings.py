@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*',]
 # Application definition
 
 INSTALLED_APPS = [
-
+    'chat',
     'store',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django_daraja'
+    'django_daraja',
+    'channels',
+    'daphne'
 ]
 
 MIDDLEWARE = [
@@ -71,8 +73,10 @@ TEMPLATES = [
         },
     },
 ]
+ASGI_APPLICATION = 'Eshop.asgi.application'
 
-WSGI_APPLICATION = 'Eshop.wsgi.application'
+
+# WSGI_APPLICATION = 'Eshop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -143,33 +147,26 @@ PASSWORD_HASHERS = [
     # Add other hashers if needed
 ]
 
-LOGIN_URL = '/login/'  # or your login URL
+LOGIN_URL = '/chat-page/'  # or your login URL
 from django.urls import reverse_lazy
 
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
+LOGiN_REDIRECT_URL = reverse_lazy('chat-page')
+
 
 # AUTH_USER_MODEL = 'store.Customer'
 
 APPEND_SLASH = False
 
-# REST_FRAMEWORK = {
-#     # Use Django's standard `django.contrib.auth` permissions,
-#     # or allow read-only access for unauthenticated users.
-#     "DEFAULT_PERMISSION_CLASSES": [
-#         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
-#     ]
-# }
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apondiashley2@gmail.com'
+EMAIL_HOST_PASSWORD = 'fjtr wblg vthk eqtg'
 
 SECURE_SSL_REDIRECT = False
-# CORS_REPLACE_HTTPS_REFERER = True
-# HOST_SCHEME = "https://"
-# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_SECONDS = 1000000
-# SECURE_FRAME_DENY = True
+
 
 # MPESA INTEGRATION
 MPESA_ENVIRONMENT = 'sandbox'
@@ -181,7 +178,7 @@ MPESA_CONSUMER_SECRET = 'qkucxPTL0JGvL2ku'
 # Shortcode and express appears when I select the app I'm working on
 MPESA_SHORTCODE = '174379'
 MPESA_EXPRESS_SHORTCODE = '174379'
-MPESA_SHORTCODE_TYPE = 'CustomerPayBillOnline'
+MPESA_SHORTCODE_TYPE = 'paybill'
 MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
 MPESA_INITIATOR_USERNAME = 'testapi'
 MPESA_INITIATOR_SECURITY_CREDENTIAL = 'Safaricom999!*!'

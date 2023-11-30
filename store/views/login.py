@@ -38,5 +38,5 @@ class Login(View):
 
 
 def logout(request):
-    request.session.flush()
+    request.session.clear()
     return redirect('login')

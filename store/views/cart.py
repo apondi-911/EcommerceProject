@@ -6,10 +6,11 @@ from django_daraja.mpesa.core import MpesaClient
 
 from store.forms.forms import PaymentForm
 from store.models.product import Products
-from store.views.mpesa_utils import initiate_mpesa_payment
+# from store.views.mpesa_utils import initiate_mpesa_payment
 
 
 class Cart(View):
+
     def get(self, request):
         ids = list(request.session.get('cart').keys())
         products = Products.get_products_by_id(ids)
@@ -35,21 +36,3 @@ class Cart(View):
             request.session['cart'] = cart
             return redirect('cart')  # Redirect to the cart page after processing the form
 
-        class Payment(View):
-            def post(self, request):
-                # Handle payment logic here, interact with M-Pesa API, and display payment form
-                phone_number = '0701582114'
-                amount = 1
-                account_reference = 'reference'
-                transaction_desc = 'Mtumba Thrift Shop'
-                callback_url = 'https://de55-197-232-81-156.ngrok-free.app/callback'
-                response = initiate_mpesa_payment(amount, phone_number, account_reference, transaction_desc,
-                                                  callback_url)
-
-                if response and response.get('ResponseCode') == '0':
-                    # Redirect to the M-Pesa payment form
-                    return redirect('mpesa_payment')  # Change this line
-
-                else:
-                    # If payment initiation failed, handle the error (you may want to show an error message)
-                    return HttpResponse("Payment initiation failed. Please try again.")
